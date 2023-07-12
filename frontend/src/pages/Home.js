@@ -10,35 +10,35 @@ function Home() {
   const [result, setResult] = useState();
   const [isAppTestVersionModalShow, setIsAppTestVersionModalShow] = useState(false);
   const [isAddModalShow, setIsAddModalShow] = useState(false);
-  const tableData = {
-    "num" : 100,
-    "configs": [{
-      "id": 1, 
-      "title": "kakaotalk", 
-      "service_location": "172.30.30.151", 
-      "OS": "ios", 
-      "service_version": "2.0", 
-      "message": "버그 수정", 
-      "package": "con.example", 
-      "regdate": "2023-07-10 12:00:00", 
-      "forceUpdatePoint": "true"
-  }, {
-      "id": 2, 
-      "title": "kakaotalk2", 
-      "service_location": "172.30.30.151", 
-      "OS": "ios", 
-      "service_version": "2.0", 
-      "message": "버그 수정", 
-      "package": "con.example", 
-      "regdate": "2023-07-10 12:00:00", 
-      "forceUpdatePoint": "true"
-  }]
-  }
+  // const tableData = {
+  //   "num" : 100,
+  //   "configs": [{
+  //     "id": 1, 
+  //     "title": "kakaotalk", 
+  //     "service_location": "172.30.30.151", 
+  //     "OS": "ios", 
+  //     "service_version": "2.0", 
+  //     "message": "버그 수정", 
+  //     "package": "con.example", 
+  //     "regdate": "2023-07-10 12:00:00", 
+  //     "forceUpdatePoint": "true"
+  // }, {
+  //     "id": 2, 
+  //     "title": "kakaotalk2", 
+  //     "service_location": "172.30.30.151", 
+  //     "OS": "ios", 
+  //     "service_version": "2.0", 
+  //     "message": "버그 수정", 
+  //     "package": "con.example", 
+  //     "regdate": "2023-07-10 12:00:00", 
+  //     "forceUpdatePoint": "true"
+  // }]
+  // }
   useEffect(() => {
 
     getData().then(res => {
-      console.log(res.configs)
-      // setResult(res.configs);
+      // console.log(res.configs)
+      setResult(res.configs);
     });
     // setResult(tableData)
     
