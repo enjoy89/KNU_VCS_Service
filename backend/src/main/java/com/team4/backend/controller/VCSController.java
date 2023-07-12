@@ -37,17 +37,9 @@ public class VCSController {
     @PostMapping("/config")
     public ResponseEntity<VCSDetailsResponseDto> getConfig(@RequestBody VCSDetailsRequestDto requestDto) {
 
-         String client_location = requestDto.getClient_nation();
-         String client_os = requestDto.getClient_os();
-         String client_version = requestDto.getClient_version();
-
-        List<VCS> serviceList = vcsService.findAll();
-
-        return null;
-
-
-        //
-
+        VCSDetailsResponseDto responseDto = vcsService.getClientInfo(requestDto);
+        System.out.println(responseDto);
+        return ResponseEntity.ok().body(responseDto);
 
     }
 
