@@ -1,38 +1,58 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-// import Table from 'react-boo'
-export const FineTable = () => {
+
+export const FineTable = ({ data }) => {
     // 디자인
     // 기능도
+    const [head, setHead] = useState();
+    const [values, setValues] = useState([]);
+
+   useEffect(() => {
+    if (data) {
+      console.log(data[0]);
+      setHead(Object.keys(data[0]));
+      console.log(data.length)
+
+      data.map((value) => {
+        setValues(prev => [...prev, Object.values(value)]);
+      })
+    }
+  }, [data]);
+
+  useEffect(() => {
+    console.log('values')
+    // console.log(values);
+    values.map((element) => {
+      console.log(element);
+    })
+  }, [values])
+
     return (
-      // <div></div>
     <Table striped bordered hover>
       <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+        <tr>{ head && 
+          head.map((th) => (
+            <th key={th}>{th}</th>
+          ))
+          }
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        {
+          values &&
+            values.map((element) => (
+                <tr>
+                  {
+                    element.map((a) => (
+                      <td>
+                        {a}
+                      </td>
+                    ))
+                  }
+                </tr>
+              ))
+        }
       </tbody>
     </Table>
     );
