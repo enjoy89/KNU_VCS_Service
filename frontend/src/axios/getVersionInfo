@@ -1,0 +1,15 @@
+import axios from "axios"
+import { useState } from "react";
+
+export default function getVersionInfo({ info }) {
+    // getData랑 합치기
+    // console.log(info)
+    return axios.post('/team4/vercontrol/config', {
+        info
+    }).then((res) => {
+        return res;
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    })
+}

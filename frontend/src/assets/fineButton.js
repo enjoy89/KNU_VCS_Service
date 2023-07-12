@@ -4,15 +4,12 @@ import { styled } from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button'; // 꼭 import를 해와야한다
 
-export const FineButton = ({ text, variant }) => {
+export const FineButton = ({ text, variant, onClick }) => {
     return (
-        <div>
-            {/* <Button>dd</Button> */}
-            {/* <Button as="input" type="button" value="Input" />{' '} */}
-            <SButton variant={variant}>{text}</SButton>
-        </div>
+        <Button variant={variant} onClick={onClick}>{text}</Button>
     )
 } 
-const SButton = styled(Button)`
+const NewButton = styled(Button)`
     flex: 1;
+    background: yellow;
 `;
