@@ -2,15 +2,16 @@ package com.team4.backend.controller;
 
 import com.team4.backend.domain.vcs.entity.VCS;
 import com.team4.backend.service.VCSService;
+import com.team4.backend.service.dto.VCSDetailsRequestDto;
+import com.team4.backend.service.dto.VCSDetailsResponseDto;
 import com.team4.backend.service.dto.VCSResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -19,21 +20,35 @@ import java.util.stream.Collectors;
 public class VCSController {
     private final VCSService vcsService;
 
-    @GetMapping("/getconfigall")
-    public ResponseEntity<List<VCSResponseDto>> getAllConfig() {
+    // findAll
+    @GetMapping("/configs")
+    public ResponseEntity<Map<String, Object>> getAllConfig(){
+
         List<VCSResponseDto> serviceList = vcsService.findAll()
                         .stream().map(VCSResponseDto::new).collect(Collectors.toList());
 
-        System.out.println(serviceList);
-
-        return ResponseEntity.ok().body(serviceList);
+        Map<String, Object> result = new HashMap<>();
+        result.put("configs", serviceList);
+        return ResponseEntity.ok().body(result);
 
     }
 
-    @GetMapping("/getconfigdetails")
-    public ResponseEntity<VCS> getConfig(@PathVariable Long id) {
+    // findOne
+    @PostMapping("/config")
+    public ResponseEntity<VCSDetailsResponseDto> getConfig(@RequestBody VCSDetailsRequestDto requestDto) {
+
+         String client_location = requestDto.getClient_nation();
+         String client_os = requestDto.getClient_os();
+         String client_version = requestDto.getClient_version();
+
+        List<VCS> serviceList = vcsService.findAll();
+
         return null;
-    }
 
+
+        //
+
+
+    }
 
 }

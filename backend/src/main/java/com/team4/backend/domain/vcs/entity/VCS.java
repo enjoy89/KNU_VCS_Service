@@ -21,7 +21,7 @@ public class VCS extends TimeEntity {
     private String title;
 
     @Column(name = "service_location")
-    private String location;
+    private String nation;
 
     @Column(name = "service_os")
     private String os;
@@ -32,15 +32,16 @@ public class VCS extends TimeEntity {
     @Column(name = "service_package")
     private String service_package;
 
-    private String forceUpdatePoint;
+    private boolean forceUpdatePoint;
 
     @Builder
-    public VCS(Long id, String title, String location, String os, String message, String forceUpdatePoint) {
+    public VCS(Long id, String title, String location, String os, String message, String service_package, String forceUpdatePoint) {
         this.id = id;
         this.title = title;
-        this.location = location;
+        this.nation = location;
         this.os = os;
         this.message = message;
-        this.forceUpdatePoint = forceUpdatePoint;
+        this.service_package = service_package;
+        this.forceUpdatePoint = false;
     }
 }
