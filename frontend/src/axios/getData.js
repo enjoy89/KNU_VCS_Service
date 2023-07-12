@@ -1,8 +1,13 @@
 import axios from "axios"
+import { useState } from "react";
 
-const GetData = () => {
-    axios.get('/')
-    return (
-        <div />
-    );
+export default function getData() {
+    
+    return axios.get('/team4/vercontrol/configs').then((res) => {
+        return res.data;
+    }).catch((err) => {
+        console.log(err);
+    })
+    
+    
 }

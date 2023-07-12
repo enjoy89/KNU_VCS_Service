@@ -5,24 +5,11 @@ import styled from 'styled-components'
 import Home from './pages/Home';
 
 function App() {
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    console.log('d')
-    axios.get('/test').then((res) => {
-      console.log(res);
-      setMessage(res.data);
-    }).catch((err) => {
-      console.log(err)
-    })
-
-  }, []);
+  // const [message, setMessage] = useState('');
   return (
-    <div>
+    <>
       <Home />
-      
-
-    </div>
+    </>
   );
 }
 
