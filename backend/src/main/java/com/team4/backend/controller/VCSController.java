@@ -1,11 +1,13 @@
 package com.team4.backend.controller;
 
-import com.team4.backend.domain.vcs.entity.VCS;
 import com.team4.backend.service.VCSService;
 import com.team4.backend.service.dto.VCSDetailsRequestDto;
 import com.team4.backend.service.dto.VCSDetailsResponseDto;
 import com.team4.backend.service.dto.VCSResponseDto;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,39 +18,44 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/team4/vercontrol")
 public class VCSController {
     private final VCSService vcsService;
 
+    // TODO: 환경변수로 service key 가져오기.
+    // 지금 @Value 어노테이션이 잘 안됨. 이유는 모르겠음
+//    @Value("${key}")
+    private final String ServiceKey = "asdf";
+
     // findAll
     @GetMapping("/configs")
-    public ResponseEntity<Map<String, Object>> getAllConfig(){
+    public ResponseEntity<Map<String, Object>> getAllConfig(
+            @RequestParam("numOfRows") String num,
+            @RequestParam("serviceKey") String key) {
 
-        List<VCSResponseDto> serviceList = vcsService.findAll()
-                        .stream().map(VCSResponseDto::new).collect(Collectors.toList());
+        log.info(num);
+        log.info(key);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("configs", serviceList);
-        return ResponseEntity.ok().body(result);
+        if (key.equals(ServiceKey)) {
+            List<VCSResponseDto> serviceList = vcsService.findAll()
+                    .stream().map(VCSResponseDto::new).collect(Collectors.toList());
 
+            // TODO: 사용자로부터 입력 받은 num의 개수만 반환하는 로직
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("numOfRows", num);
+            result.put("configs", serviceList);
+            return ResponseEntity.ok().body(result);
+        } else {
+
+            // TODO: 에러 메시지 보내기
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    // findOne
     @PostMapping("/config")
     public ResponseEntity<VCSDetailsResponseDto> getConfig(@RequestBody VCSDetailsRequestDto requestDto) {
-
-         String client_location = requestDto.getClient_nation();
-         String client_os = requestDto.getClient_os();
-         String client_version = requestDto.getClient_version();
-
-        List<VCS> serviceList = vcsService.findAll();
-
-        return null;
-
-
-        //
-
-
+        return ResponseEntity.ok().body(vcsService.getClientInfo(requestDto));
     }
-
 }

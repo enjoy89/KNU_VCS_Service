@@ -1,4 +1,4 @@
-package com.team4.backend.domain;
+package com.team4.backend.test;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

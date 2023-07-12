@@ -9,15 +9,18 @@ public class VCSResponseDto {
     private String title;
     private String nation;
     private String os;
+    private String version;
     private String message;
     private String service_package;
     private String forceUpdatePoint;
+
 
     public VCSResponseDto(VCS vcs) {
         this.id = vcs.getId();
         this.title = vcs.getTitle();
         this.nation = vcs.getNation();
         this.os = vcs.getOs();
+        this.version = vcs.getVersion();
         this.message = vcs.getMessage();
         this.service_package = vcs.getService_package();
         this.forceUpdatePoint = String.valueOf(vcs.isForceUpdatePoint());

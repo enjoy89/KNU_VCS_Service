@@ -15,6 +15,6 @@ import java.time.LocalDateTime;
 public class TimeEntity {
 
     @CreatedDate
-    @Column(name ="service_regdate" ,updatable = false)
+    @Column(name ="service_regdate" ,nullable = false)
     private LocalDateTime regdate;
 }
