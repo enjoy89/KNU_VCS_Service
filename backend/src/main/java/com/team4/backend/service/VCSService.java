@@ -11,10 +11,18 @@ import java.util.List;
 @Service
 public class VCSService {
     private final VCSRepository vcsRepository;
-    public List<VCS> findAll() { return vcsRepository.findAll();
+    public List<VCS> findAll() {
+        return vcsRepository.findAll();
     }
+
     public VCS findById(Long id){
         return  vcsRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("update not exist : " + id));
     }
+
+//    public void save() {
+//        VCS vcs = VCS.builder()
+//                .id
+//                .build();
+//    }
 }

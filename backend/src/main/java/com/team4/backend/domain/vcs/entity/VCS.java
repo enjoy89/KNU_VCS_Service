@@ -1,26 +1,20 @@
 package com.team4.backend.domain.vcs.entity;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "vcs_info")
-public class VCS {
+public class VCS extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "service_id")
+    @Column(name = "service_id", updatable = false)
     private Long id;
 
     @Column(name = "service_title")
@@ -35,9 +29,18 @@ public class VCS {
     @Column(name = "service_message")
     private String message;
 
-    @CreatedDate
-    @Column(name = "service_regdate")
-    private LocalDateTime regdate;
+    @Column(name = "service_package")
+    private String service_package;
 
     private String forceUpdatePoint;
+
+    @Builder
+    public VCS(Long id, String title, String location, String os, String message, String forceUpdatePoint) {
+        this.id = id;
+        this.title = title;
+        this.location = location;
+        this.os = os;
+        this.message = message;
+        this.forceUpdatePoint = forceUpdatePoint;
+    }
 }
