@@ -25,32 +25,26 @@ import java.util.stream.Collectors;
 @RequestMapping("/team4/vercontrol")
 public class VCSController {
     private final VCSService vcsService;
-    @Value("${serviceKey}") private String SERVICE_KEY;
+    @Value("${serviceKey}")
+    private String SERVICE_KEY;
 
-    @PostMapping("/addconfig")
+    // Create
+    @PostMapping("/config")
     public ResponseEntity<VCS> saveConfig(@RequestBody VCSRequestDto requestDto,
-                                          @RequestHeader("serviceKey") String key){
-        if (key.equals(SERVICE_KEY)) {
+                                          @RequestHeader("serviceKey") String key) {
+        if (clientVerification(key)) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(vcsService.saveConfig(requestDto));
-        }else {
-
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-
-    // findAll
-
+    // Read All
     @GetMapping("/configs")
-    public ResponseEntity<Map<String, Object>> getAllConfig(
-            @RequestHeader("numOfRows") String num,
-            @RequestHeader("serviceKey") String key) {
-
-        log.info(num);
-        log.info(key);
-
-        if (key.equals(SERVICE_KEY)) {
+    public ResponseEntity<Map<String, Object>> getAllConfig(@RequestHeader("numOfRows") String num,
+                                                            @RequestHeader("serviceKey") String key) {
+        if (clientVerification(key)) {
             List<VCSResponseDto> serviceList = vcsService.findAll()
                     .stream().map(VCSResponseDto::new).collect(Collectors.toList());
 
@@ -64,31 +58,37 @@ public class VCSController {
             result.put("configs", serviceList);
             return ResponseEntity.ok().body(result);
         } else {
-
             // TODO: 에러 메시지 보내기
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping("/config")
-    public ResponseEntity<VCSDetailsResponseDto> getConfig(
-            @RequestBody VCSDetailsRequestDto requestDto,
-            @RequestHeader("serviceKey") String key) {
-        if (key.equals(SERVICE_KEY)) {
+    // Read details
+    @PostMapping("/config-details")
+    public ResponseEntity<VCSDetailsResponseDto> getConfig(@RequestBody VCSDetailsRequestDto requestDto,
+                                                           @RequestHeader("serviceKey") String key) {
+        if (clientVerification(key)) {
             vcsService.saveClient(requestDto);
             return ResponseEntity.ok().body(vcsService.getLatestVerInfo(requestDto));
-
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @DeleteMapping("/config")
-    public ResponseEntity<Void> deleteVCS(@PathVariable Long id){
-        vcsService.delete(id);
-        return ResponseEntity.ok().build();
+    // Delete
+    @DeleteMapping("/config/{id}")
+    public ResponseEntity<Void> deleteVCS(@RequestHeader("serviceKey") String key,
+                                          @PathVariable Long id) {
+        if (clientVerification(key)) {
+            vcsService.delete(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-
-
+    // 사용자 검증
+    public boolean clientVerification(String key) {
+        return key.equals(SERVICE_KEY);
+    }
 }
