@@ -1,8 +1,10 @@
 package com.team4.backend.controller;
 
+import com.team4.backend.domain.vcs.entity.VCS;
 import com.team4.backend.service.VCSService;
 import com.team4.backend.service.dto.VCSDetailsRequestDto;
 import com.team4.backend.service.dto.VCSDetailsResponseDto;
+import com.team4.backend.service.dto.VCSRequestDto;
 import com.team4.backend.service.dto.VCSResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +25,23 @@ import java.util.stream.Collectors;
 @RequestMapping("/team4/vercontrol")
 public class VCSController {
     private final VCSService vcsService;
-    @Value("${secretKey}") private String SERVICE_KEY;
+    @Value("${serviceKey}") private String SERVICE_KEY;
+
+    @PostMapping("/addconfig")
+    public ResponseEntity<VCS> saveConfig(@RequestBody VCSRequestDto requestDto,
+                                          @RequestHeader("serviceKey") String key){
+        if (key.equals(SERVICE_KEY)) {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(vcsService.saveConfig(requestDto));
+        }else {
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     // findAll
+
     @GetMapping("/configs")
     public ResponseEntity<Map<String, Object>> getAllConfig(
             @RequestHeader("numOfRows") String num,
@@ -38,6 +55,9 @@ public class VCSController {
                     .stream().map(VCSResponseDto::new).collect(Collectors.toList());
 
             // TODO: 사용자로부터 입력 받은 num의 개수만 반환하는 로직
+            if (serviceList.size() > Integer.parseInt(num)) {
+                serviceList = serviceList.subList(0, Integer.parseInt(num));
+            }
 
             Map<String, Object> result = new HashMap<>();
             result.put("numOfRows", num);
@@ -51,7 +71,24 @@ public class VCSController {
     }
 
     @PostMapping("/config")
-    public ResponseEntity<VCSDetailsResponseDto> getConfig(@RequestBody VCSDetailsRequestDto requestDto) {
-        return ResponseEntity.ok().body(vcsService.getLatestVerInfo(requestDto));
+    public ResponseEntity<VCSDetailsResponseDto> getConfig(
+            @RequestBody VCSDetailsRequestDto requestDto,
+            @RequestHeader("serviceKey") String key) {
+        if (key.equals(SERVICE_KEY)) {
+            vcsService.saveClient(requestDto);
+            return ResponseEntity.ok().body(vcsService.getLatestVerInfo(requestDto));
+
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
+
+    @DeleteMapping("/config")
+    public ResponseEntity<Void> deleteVCS(@PathVariable Long id){
+        vcsService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+
+
 }

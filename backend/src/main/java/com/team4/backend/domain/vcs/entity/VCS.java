@@ -38,10 +38,10 @@ public class VCS extends TimeEntity {
     private boolean forceUpdatePoint;
 
     @Builder
-    public VCS(Long id, String title, String location, String os, String version, String message, String service_package, String forceUpdatePoint) {
+    public VCS(Long id, String title, String nation, String os, String version, String message, String service_package, String forceUpdatePoint) {
         this.id = id;
         this.title = title;
-        this.nation = location;
+        this.nation = nation;
         this.os = os;
         this.version = version;
         this.message = message;
