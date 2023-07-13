@@ -22,14 +22,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/team4/vercontrol")
 public class VCSController {
     private final VCSService vcsService;
-    @Value("${secretKey}")
-    private String SERVICE_KEY;
+    @Value("${secretKey}") private String SERVICE_KEY;
 
     // findAll
     @GetMapping("/configs")
     public ResponseEntity<Map<String, Object>> getAllConfig(
-            @RequestParam("numOfRows") String num,
-            @RequestParam("serviceKey") String key) {
+            @RequestHeader("numOfRows") String num,
+            @RequestHeader("serviceKey") String key) {
 
         log.info(num);
         log.info(key);
@@ -53,6 +52,6 @@ public class VCSController {
 
     @PostMapping("/config")
     public ResponseEntity<VCSDetailsResponseDto> getConfig(@RequestBody VCSDetailsRequestDto requestDto) {
-        return ResponseEntity.ok().body(vcsService.getClientInfo(requestDto));
+        return ResponseEntity.ok().body(vcsService.getLatestVerInfo(requestDto));
     }
 }

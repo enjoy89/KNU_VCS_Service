@@ -51,7 +51,7 @@ public class VCSService {
     }
 
     // 업데이트 조건을 검사함
-    public VCSDetailsResponseDto getClientInfo(VCSDetailsRequestDto requestDto) {
+    public VCSDetailsResponseDto getLatestVerInfo(VCSDetailsRequestDto requestDto) {
         boolean isForceUpdate = false;  // 강제적 업데이트 정보 초기화
 
         // client 정보를 필터링 처리
@@ -61,8 +61,11 @@ public class VCSService {
         // 사이즈가 2 이상인 경우: 최신버전이 존재하므로 업데이트가 필요함
         boolean isLatest = client.size() == 1;
 
+        // 자기 자신을 제외하고 이후에 업데이트 된 버전의 강제 업데이트 여부를 확인
+        List<VCS> exceptClientVer = client.subList(1,client.size());
+
         // 강제적 업데이트가 필요한 경우 필터링
-        isForceUpdate = client.stream().filter(VCS::isForceUpdatePoint).count() > 0;
+        isForceUpdate = exceptClientVer.stream().filter(VCS::isForceUpdatePoint).count() > 0;
 
         // 사용자 조건에 해당하는 최신화 버전 VCS 결과
         VCS filtervcs = client.get(client.size() - 1);
