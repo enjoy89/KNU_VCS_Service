@@ -3,10 +3,10 @@ server:
 
 spring:
   datasource:
-    driver-class-name: ${DB_DRIVER}
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test_db?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
 
   jpa:
     open-in-view: true
@@ -29,6 +29,10 @@ logging:
   level:
     org.hibernate.SQL: debug
 
-serviceKey: ${USER_SERVICE_KEY}
+serviceKey: e08f7MGVA9XkHa7TejMnVUyzblYcfPQy
+
+
+
+
 
 

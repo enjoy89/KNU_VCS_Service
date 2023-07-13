@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,8 +48,8 @@ public class VCSController {
                     .stream().map(VCSResponseDto::new).collect(Collectors.toList());
 
             // TODO: 사용자로부터 입력 받은 num의 개수만 반환하는 로직
-            if (serviceList.size() > Integer.parseInt(num)) {
-                serviceList = serviceList.subList(0, Integer.parseInt(num));
+            if (serviceList.size() >= Integer.parseInt(num)) {
+                serviceList = serviceList.subList((serviceList.size() - Integer.parseInt(num)), serviceList.size());
             }
 
             Map<String, Object> result = new HashMap<>();
