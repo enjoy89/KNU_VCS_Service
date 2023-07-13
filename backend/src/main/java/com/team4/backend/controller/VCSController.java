@@ -5,7 +5,7 @@ import com.team4.backend.service.dto.VCSDetailsRequestDto;
 import com.team4.backend.service.dto.VCSDetailsResponseDto;
 import com.team4.backend.service.dto.VCSResponseDto;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +22,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/team4/vercontrol")
 public class VCSController {
     private final VCSService vcsService;
-
-    // TODO: 환경변수로 service key 가져오기.
-    // 지금 @Value 어노테이션이 잘 안됨. 이유는 모르겠음
-//    @Value("${key}")
-    private final String ServiceKey = "asdf";
+    @Value("${secretKey}")
+    private String SERVICE_KEY;
 
     // findAll
     @GetMapping("/configs")
@@ -37,7 +34,7 @@ public class VCSController {
         log.info(num);
         log.info(key);
 
-        if (key.equals(ServiceKey)) {
+        if (key.equals(SERVICE_KEY)) {
             List<VCSResponseDto> serviceList = vcsService.findAll()
                     .stream().map(VCSResponseDto::new).collect(Collectors.toList());
 

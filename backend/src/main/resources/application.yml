@@ -29,6 +29,6 @@ logging:
   level:
     org.hibernate.SQL: debug
 
-secretKey: ${key}
+serviceKey: ${USER_SERVICE_KEY}
 
 
