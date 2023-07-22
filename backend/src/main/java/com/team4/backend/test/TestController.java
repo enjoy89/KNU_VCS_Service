@@ -1,4 +1,4 @@
-package com.team4.backend;
+package com.team4.backend.test;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
