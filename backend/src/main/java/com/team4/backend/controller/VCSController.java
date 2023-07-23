@@ -28,6 +28,7 @@ public class VCSController {
     @Value("${serviceKey}")
     private String SERVICE_KEY;
 
+
     // Create
     @PostMapping("/config")
     public ResponseEntity<VCS> saveConfig(@RequestBody VCSRequestDto requestDto,
@@ -40,28 +41,30 @@ public class VCSController {
         }
     }
 
+
     // Read All
-//    @GetMapping("/configs")
-//    public ResponseEntity<Map<String, Object>> getAllConfig(@RequestHeader("numOfRows") String num,
-//                                                            @RequestHeader("serviceKey") String key) {
-//        if (clientVerification(key)) {
-//            List<VCSResponseDto> serviceList = vcsService.findAll()
-//                    .stream().map(VCSResponseDto::new).collect(Collectors.toList());
-//
-//            // TODO: 사용자로부터 입력 받은 num의 개수만 반환하는 로직
-////            if (serviceList.size() >= Integer.parseInt(num)) {
-////                serviceList = serviceList.subList((serviceList.size() - Integer.parseInt(num)), serviceList.size());
-////            }
-//
-//            Map<String, Object> result = new HashMap<>();
-//            result.put("numOfRows", num);
-//            result.put("configs", serviceList);
-//            return ResponseEntity.ok().body(result);
-//        } else {
-//            // TODO: 에러 메시지 보내기
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @GetMapping("/configs-all")
+    public ResponseEntity<Map<String, Object>> getAllConfig(@RequestHeader("numOfRows") String num,
+                                                            @RequestHeader("serviceKey") String key) {
+        if (clientVerification(key)) {
+            List<VCSResponseDto> serviceList = vcsService.findAll()
+                    .stream().map(VCSResponseDto::new).collect(Collectors.toList());
+
+            // TODO: 사용자로부터 입력 받은 num의 개수만 반환하는 로직
+            if (serviceList.size() >= Integer.parseInt(num)) {
+                serviceList = serviceList.subList((serviceList.size() - Integer.parseInt(num)), serviceList.size());
+            }
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("numOfRows", num);
+            result.put("configs", serviceList);
+            return ResponseEntity.ok().body(result);
+        } else {
+            // TODO: 에러 메시지 보내기
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     // Read details
     @PostMapping("/config-details")
@@ -75,6 +78,7 @@ public class VCSController {
         }
     }
 
+
     // Delete
     @DeleteMapping("/config/{id}")
     public ResponseEntity<Void> deleteVCS(@RequestHeader("serviceKey") String key,
@@ -87,17 +91,17 @@ public class VCSController {
         }
     }
 
+
     // 사용자 검증
     public boolean clientVerification(String key) {
         return key.equals(SERVICE_KEY);
     }
 
-    //페이징
-
-    @PostMapping("/configs")
+    // Read All && 페이징 기능 추가
+    @PostMapping("/configs-paging")
     public  ResponseEntity<Map<String, Object>> pageVersionConfigs(@RequestBody PageRequestDto requestDto,
-                                        @RequestHeader("numOfRows") String num,
-                                        @RequestHeader("serviceKey") String key) {
+                                                                   @RequestHeader("numOfRows") String num,
+                                                                   @RequestHeader("serviceKey") String key) {
 
         if (clientVerification(key)) {
             // 바디에서는 현재 페이지 번호를 가져오고, 헤더에서는 표시해 줄 row수를 가져온다
@@ -111,12 +115,6 @@ public class VCSController {
             // content에 configs 데이터가 전달되는데, 우리가 설정한 dto로 바꾸는 코드
             List<VCSResponseDto> serviceList = ((List<VCS>)page.getContent())
                     .stream().map(VCSResponseDto::new).collect(Collectors.toList());
-
-
-            // TODO: 사용자로부터 입력 받은 num의 개수만 반환하는 로직
-//            if (serviceList.size() >= Integer.parseInt(num)) {
-//                serviceList = serviceList.subList((serviceList.size() - Integer.parseInt(num)), serviceList.size());
-//            }
 
             // page객체에서 필요한 정보들을 꺼내서 바디로 전달
             Map<String, Object> result = new HashMap<>();
@@ -135,9 +133,6 @@ public class VCSController {
             // TODO: 에러 메시지 보내기
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-
-
-
     }
+
 }
