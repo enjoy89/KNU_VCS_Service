@@ -7,6 +7,8 @@ import com.team4.backend.service.dto.VCSDetailsRequestDto;
 import com.team4.backend.service.dto.VCSDetailsResponseDto;
 import com.team4.backend.service.dto.VCSRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
@@ -104,4 +106,9 @@ public class VCSService {
     public void delete(Long id) {
         vcsRepository.deleteById(id);
     }
+
+    public Page<VCS> pageVersions(Pageable pageable) {
+        return vcsRepository.findAll(pageable);
+    }
+
 }

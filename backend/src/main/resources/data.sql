@@ -37,3 +37,39 @@ VALUES (9, NOW(), false, "버그 수정", "영국", "IOS", "com.example", "kakao
 INSERT INTO vcs_info
 (service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
 VALUES (10, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (11, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "2.0");
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (12, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (13, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (14, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (15, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (16, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (17, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (18, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (19, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (20, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+INSERT INTO vcs_info
+(service_id, service_regdate, forceUpdatePoint, service_message, service_nation, service_os, service_package, service_title, service_version)
+VALUES (21, NOW(), true, "버그 수정", "한국", "AOS", "com.example", "kakaotalk", "1.0");
+
