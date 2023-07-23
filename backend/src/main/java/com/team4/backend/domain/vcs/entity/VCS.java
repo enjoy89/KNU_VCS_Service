@@ -11,7 +11,6 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "vcs_info")
 public class VCS extends TimeEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "service_id", updatable = false)
@@ -49,3 +48,6 @@ public class VCS extends TimeEntity {
         this.forceUpdatePoint = false;
     }
 }
+
+
+

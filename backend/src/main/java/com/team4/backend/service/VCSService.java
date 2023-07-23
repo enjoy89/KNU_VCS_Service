@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +23,13 @@ public class VCSService {
     private final VCSRepository vcsRepository;
     private final ClientRepository clientRepository;
 
+    @Transactional
     public VCS saveConfig(VCSRequestDto requestDto) {
         return vcsRepository.save(requestDto.toEntity());
     }
 
     // 서비스 전체 조회
+    @Transactional
     public List<VCS> findAll() {
         return vcsRepository.findAll();
     }
@@ -103,6 +106,7 @@ public class VCSService {
         clientRepository.save(client.toEntity());
     }
 
+    @Transactional
     public void delete(Long id) {
         vcsRepository.deleteById(id);
     }
