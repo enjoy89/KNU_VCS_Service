@@ -5,8 +5,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://vcs-service-db.cf08d3xfd2vx.ap-northeast-2.rds.amazonaws.com:3306/vcsDB
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: user
+    password: team4-user
 
   jpa:
     open-in-view: true
@@ -29,5 +29,5 @@ logging:
   level:
     org.hibernate.SQL: debug
 
-serviceKey: ${USER_SERVICE_KEY}
+serviceKey: e08f7MGVA9XkHa7TejMnVUyzblYcfPQy
 
