@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test_db?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://vcs-service-db.cf08d3xfd2vx.ap-northeast-2.rds.amazonaws.com:3306/vcsDB
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
